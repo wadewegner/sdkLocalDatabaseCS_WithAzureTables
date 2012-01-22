@@ -79,40 +79,17 @@ namespace sdkLocalDatabaseCS
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
 
-            //// Specify the local database connection string.
-            //string DBConnectionString = "Data Source=isostore:/ToDo.sdf";
-
-            //// Create the database if it does not exist.
-            //using (ToDoDataContext db = new ToDoDataContext(DBConnectionString))
-            //{
-            //    if (db.DatabaseExists() == false)
-            //    {
-            //        // Create the local database.
-            //        db.CreateDatabase();
-
-            //        // Prepopulate the categories.
-            //        db.Categories.InsertOnSubmit(new ToDoCategory { Name = "Home" });
-            //        db.Categories.InsertOnSubmit(new ToDoCategory { Name = "Work" });
-            //        db.Categories.InsertOnSubmit(new ToDoCategory { Name = "Hobbies" });
-
-            //        // Save categories to the database.
-            //        db.SubmitChanges();
-            //    }
-            //}
-
             // Create the ViewModel object.
             viewModel = new ToDoViewModel();
 
-            // Query the local database and load observable collections.
-
-
+            ApplicationStateHelpers.Set("loading", true);
         }
 
         // Code to execute when the application is launching (eg, from Start)
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
-            viewModel.LoadCollectionsFromDatabase();
+            viewModel.LoadCollections();
         }
 
         // Code to execute when the application is activated (brought to foreground)

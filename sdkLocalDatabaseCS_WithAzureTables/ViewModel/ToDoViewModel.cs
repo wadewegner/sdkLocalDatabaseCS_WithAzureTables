@@ -19,6 +19,7 @@ using sdkLocalDatabaseCS.Model;
 using System;
 using System.Globalization;
 using System.Collections;
+using sdkLocalDatabaseCS;
 
 
 namespace LocalDatabaseSample.ViewModel
@@ -40,6 +41,8 @@ namespace LocalDatabaseSample.ViewModel
 
             toDoEntityCollection.LoadCompleted += (s, e) =>
                 {
+                    ApplicationStateHelpers.Set("loading", true);
+
                     AllToDoItems = toDoEntityCollection;
 
                     // Query the database and load all associated items to their respective collections.
@@ -60,6 +63,8 @@ namespace LocalDatabaseSample.ViewModel
                                 break;
                         }
                     }
+
+                    ApplicationStateHelpers.Set("loading", false);
                 };
 
             var tableUri = new Uri(
@@ -135,7 +140,7 @@ namespace LocalDatabaseSample.ViewModel
         }
 
         // Query the table services and load the collections and list used by the pivot pages.
-        public void LoadCollectionsFromDatabase()
+        public void LoadCollections()
         {
             List<string> categories = new List<string>();
             categories.Add("Home");
